@@ -9,7 +9,13 @@ import bs58 from "bs58"
 
 
 // Step 2: Decode the base-58 secret key into a Uint8Array
-const secretKeyUint8Array = bs58.decode("5gPa2G37Mav6RoSUMsTxyfs8VsHamSbCSbV5F1qVt9M2YbRTtRHKg2giYt2FUUFVu8ceXnttmyMV8V5vWKzkjads");
+const base58SecretKey = process.env.SECRET_KEY;
+if (!base58SecretKey) {
+    throw new Error("SECRET_KEY environment variable is not set");
+  }
+  
+  // Step 2: Decode the base-58 secret key into a Uint8Array
+  const secretKeyUint8Array = bs58.decode(base58SecretKey);
 
 // Step 3: Create a Keypair using the decoded Uint8Array
 const senderKeypair = Keypair.fromSecretKey(secretKeyUint8Array);
